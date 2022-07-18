@@ -2,7 +2,7 @@
   <div class="swiper-main">
     <swiper :options="swiperOption">
       <swiper-slide v-for="(item, index) in swiperList" :key="index">
-        <img :src="item.imgUrl" :alt="item.title" />
+        <img :src="item.imgUrl" alt="" />
       </swiper-slide>
     </swiper>
     <!-- 轮播图点点 -->
@@ -19,34 +19,22 @@ export default {
     swiper,
     swiperSlide
   },
+  props: {
+    swiperList: Array
+  },
   data() {
     return {
-      swiperList: [
-        {
-          id: 1,
-          imgUrl: './images/swiper1.jpeg'
-        },
-        {
-          id: 2,
-          imgUrl: './images/swiper2.jpeg'
-        },
-        {
-          id: 3,
-          imgUrl: './images/swiper3.jpeg'
-        }
-      ],
       swiperOption: {
         // swiper3
         autoplay: 3000,
         speed: 1000,
         pagination: {
-          el: '.swiper-pagination',
-          clickable: true
+          el: '.swiper-pagination'
+          // clickable: true
         }
       }
     }
-  },
-  methods: {}
+  }
 }
 </script>
 

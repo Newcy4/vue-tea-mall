@@ -1,7 +1,7 @@
 <template>
   <header class="header">
     <img src="@/assets/images/logo.png" alt="茶七网" />
-    <div class="search">
+    <div class="search" @click="goSearch">
       <i class="iconfont icon-fangdajing"></i>
       <span>搜您喜欢的</span>
     </div>
@@ -11,7 +11,15 @@
 
 <script>
 export default {
-  name: 'Header'
+  name: 'Header',
+  methods: {
+    goBack() {
+      this.$router.back()
+    },
+    goSearch() {
+      this.$router.push('/search')
+    }
+  }
 }
 </script>
 
