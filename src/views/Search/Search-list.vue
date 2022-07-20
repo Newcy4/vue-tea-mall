@@ -3,19 +3,9 @@
     <div class="headers">
       <Header></Header>
       <ul>
-        <li>
-          <div>综合</div>
-        </li>
-        <li>
-          <div>价格</div>
-          <div class="search-filter">
-            <i class="iconfont icon-arrow_up_fat"></i>
-            <i class="iconfont icon-arrow_down_fat"></i>
-          </div>
-        </li>
-        <li>
-          <div>销量</div>
-          <div class="search-filter">
+        <li v-for="(item, index) in searchList.data" :key="index">
+          <div>{{ item.name }}</div>
+          <div class="search-filter" v-if="index !== 0">
             <i class="iconfont icon-arrow_up_fat"></i>
             <i class="iconfont icon-arrow_down_fat"></i>
           </div>
@@ -24,35 +14,13 @@
     </div>
     <section>
       <ul>
-        <li>
-          <img src="" alt="" />
-          <h3>赛事茶-第三届武夷山茶叶交易会暨仙店杯-优质奖肉桂160g</h3>
+        <li v-for="(item, index) in goodsList" :key="index">
+          <img :src="item.imgUrl" alt="" />
+          <h3>{{ item.name }}</h3>
           <div class="price">
             <div>
               <span>¥</span>
-              <b>238</b>
-            </div>
-            <div>立即购买</div>
-          </div>
-        </li>
-        <li>
-          <img src="" alt="" />
-          <h3>赛事茶-第三届武夷山茶叶交易会暨仙店杯-优质奖肉桂160g</h3>
-          <div class="price">
-            <div>
-              <span>¥</span>
-              <b>238</b>
-            </div>
-            <div>立即购买</div>
-          </div>
-        </li>
-        <li>
-          <img src="" alt="" />
-          <h3>赛事茶-第三届武夷山茶叶交易会暨仙店杯-优质奖肉桂160g</h3>
-          <div class="price">
-            <div>
-              <span>¥</span>
-              <b>238</b>
+              <b>{{ item.price }}</b>
             </div>
             <div>立即购买</div>
           </div>
@@ -66,10 +34,50 @@
 <script>
 import Header from './Search-header.vue'
 import Tabbar from '@/components/Tabbar.vue'
+import http from '@/common/api/request.js'
 export default {
   components: {
     Header,
     Tabbar
+  },
+  data() {
+    return {
+      goodsList: [],
+      searchList: {
+        currentIndex: 0,
+        data: [
+          /**
+          status: 0 都不亮
+          status: 1 上箭头亮
+          status: 2 下箭头亮
+           */
+          { name: '综合' },
+          { name: '价格', status: 0 },
+          { name: '销量', status: 0 }
+        ]
+      }
+    }
+  },
+  created() {
+    this.getData()
+  },
+  methods: {
+    async getData() {
+      let res = await http.$axios({
+        url: '/api/goods/shopList',
+        params: {
+          searchName: this.$route.query.key
+        }
+      })
+      this.goodsList = res
+      console.log(res)
+    }
+  },
+  watch: {
+    $route() {
+      // 监听路由是否发生改变，发生改变再次请求
+      this.getData()
+    }
   }
 }
 </script>
@@ -150,5 +158,9 @@ section ul li .price div:last-child {
   color: #fff;
   background-color: #b0352f;
   border-radius: 0.16rem;
+}
+
+.active {
+  color: red;
 }
 </style>

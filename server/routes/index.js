@@ -1,9 +1,23 @@
 var express = require('express')
 var router = express.Router()
+var connection = require('../db/sql')
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
   res.render('index', { title: 'Express' })
+})
+
+// 查询商品数据接口
+router.get('/api/goods/shopList', function (req, res, next) {
+  // 前端给后端的数据
+  let searchName = req.query.searchName
+
+  connection.query(`select * from goods_list where name like "%${searchName}%"`, function (error, results) {
+    res.send({
+      code: 0,
+      data: results
+    })
+  })
 })
 
 //首页铁观音的数据

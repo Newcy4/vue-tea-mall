@@ -17,7 +17,8 @@
 export default {
   data() {
     return {
-      searchVal: ''
+      searchVal: this.$route.query.key || '',
+      searchArr: []
     }
   },
   methods: {
@@ -25,10 +26,35 @@ export default {
       this.$router.back()
     },
     goSearchList() {
+      // 如果搜索关键字为空，直接return
       if (!this.searchVal) return
-      console.log(this.searchVal)
+      // 判断之前有没有搜索的本地存储
+      if (!localStorage.getItem('searchList')) {
+        // 没有
+        localStorage.setItem('searchList', [])
+      } else {
+        // 之前有
+        this.searchArr = JSON.parse(localStorage.getItem('searchList'))
+      }
 
-      // this.$router.push({ name: 'list' })
+      // 增加数据
+      this.searchArr.unshift(this.searchVal)
+      // ES6去重，防止加入重复搜索的数据
+      // set是是对象，需要用Array.from转换成数组
+      let newArr = new Set(this.searchArr)
+
+      // 给本地存储赋值
+      localStorage.setItem('searchList', JSON.stringify(Array.from(newArr)))
+
+      // 路径如果没有变化，不跳转页面
+      if (this.searchVal === this.$route.query.key) return
+      // 跳转页面
+      this.$router.push({
+        name: 'list',
+        query: {
+          key: this.searchVal
+        }
+      })
     }
   }
 }

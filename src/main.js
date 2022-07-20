@@ -12,6 +12,10 @@ import '@/assets/styles/iconfont.css'
 // 引入ly-tab插件
 import LyTab from 'ly-tab'
 Vue.use(LyTab)
+// 引入mint-ui
+import Mint from 'mint-ui'
+import 'mint-ui/lib/style.css'
+Vue.use(Mint)
 
 Vue.config.productionTip = false
 

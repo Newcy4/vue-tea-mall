@@ -32,7 +32,7 @@ import Ad from './Ad.vue'
 import { LyTabs, LyTabItem } from 'ly-tab'
 // 引入插件
 import BetterScroll from 'better-scroll'
-import axios from 'axios'
+import http from '@/common/api/request.js'
 export default {
   name: 'Home',
   components: {
@@ -59,12 +59,11 @@ export default {
     },
     // 获取首页推荐数据
     async getData() {
-      const res = await axios({
+      let res = await http.$axios({
         url: '/api/index_list/0/data/1'
       })
-      this.topBar = Object.freeze(res.data.data.topBar) // 性能优化
-      this.pageData = Object.freeze(res.data.data.data)
-      // console.log(res)
+      this.topBar = Object.freeze(res.topBar) // 性能优化
+      this.pageData = Object.freeze(res.data)
 
       // 当页面中的DOM都加载完之后再加载better-scroll
       this.$nextTick(() => {
@@ -76,13 +75,13 @@ export default {
     },
     // 点击topBar切换页面后重新获取数据
     async addData(index) {
-      const res = await axios({
+      let res = await http.$axios({
         url: `/api/index_list/${index}/data/1`
       })
-      if (res.data.data.constructor !== Array) {
-        this.pageData = res.data.data.data
+      if (res.constructor !== Array) {
+        this.pageData = res.data
       } else {
-        this.pageData = res.data.data
+        this.pageData = res
       }
     }
   },
