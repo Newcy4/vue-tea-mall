@@ -6,7 +6,7 @@
     <ul>
       <li v-for="(item, index) in likeList" :key="index">
         <h2>
-          <img :src="item.imgUrl" alt="" />
+          <img v-lazy="item.imgUrl" alt="" />
         </h2>
         <h3>{{ item.name }}</h3>
         <div>
@@ -20,6 +20,7 @@
 
 <script>
 import Card from './Card.vue'
+// import { Lazyload } from 'mint-ui'
 export default {
   props: {
     likeList: Array
@@ -68,5 +69,11 @@ export default {
 .like img {
   width: 4.693333rem;
   height: 4.693333rem;
+}
+
+.like img[lazy='loading'] {
+  width: 40px;
+  height: 300px;
+  margin: auto;
 }
 </style>

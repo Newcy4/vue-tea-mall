@@ -9,7 +9,9 @@
           <span @click="deleteStorage">清空历史记录</span>
         </h2>
         <ul>
-          <li v-for="(item, index) in searchArr" :key="index">{{ item }}</li>
+          <li v-for="(item, index) in searchArr" :key="index" @click="goSearchList(item)">
+            {{ item }}
+          </li>
         </ul>
       </div>
       <div v-else>暂无搜索记录...</div>
@@ -50,6 +52,15 @@ export default {
         // 清空数据，因为删除本地存储，页面依赖的渲染数据也没清空
         this.searchArr = []
       }
+    },
+    // 点击历史搜索，进入搜索界面
+    goSearchList(item) {
+      this.$router.push({
+        name: 'list',
+        query: {
+          key: item
+        }
+      })
     }
   }
 }

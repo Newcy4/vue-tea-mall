@@ -3,19 +3,21 @@
     <div class="headers">
       <Header></Header>
       <ul>
-        <li v-for="(item, index) in searchList.data" :key="index">
-          <div>{{ item.name }}</div>
+        <li v-for="(item, index) in searchList.data" :key="index" @click="chengeTab(index)">
+          <div :class="searchList.currentIndex === index ? 'active' : ''">
+            {{ item.name }}
+          </div>
           <div class="search-filter" v-if="index !== 0">
-            <i class="iconfont icon-arrow_up_fat"></i>
-            <i class="iconfont icon-arrow_down_fat"></i>
+            <i class="iconfont icon-arrow_up_fat" :class="item.status === 1 ? 'active' : ''"></i>
+            <i class="iconfont icon-arrow_down_fat" :class="item.status === 2 ? 'active' : ''"></i>
           </div>
         </li>
       </ul>
     </div>
     <section>
-      <ul>
+      <ul v-if="goodsList.length">
         <li v-for="(item, index) in goodsList" :key="index">
-          <img :src="item.imgUrl" alt="" />
+          <img v-lazy="item.imgUrl" alt="" />
           <h3>{{ item.name }}</h3>
           <div class="price">
             <div>
@@ -26,6 +28,7 @@
           </div>
         </li>
       </ul>
+      <h2 v-else>暂无数据</h2>
     </section>
     <Tabbar></Tabbar>
   </div>
@@ -51,10 +54,21 @@ export default {
           status: 1 上箭头亮
           status: 2 下箭头亮
            */
-          { name: '综合' },
-          { name: '价格', status: 0 },
-          { name: '销量', status: 0 }
+          { name: '综合', key: 'zonghe' },
+          { name: '价格', status: 0, key: 'price' },
+          { name: '销量', status: 0, key: 'num' }
         ]
+      }
+    }
+  },
+  computed: {
+    orderBy() {
+      // 知道当前是哪一个对象
+      let obj = this.searchList.data[this.searchList.currentIndex]
+      // 针对状态，判断圣墟还是降序
+      let val = obj.status == '1' ? 'asc' : 'desc'
+      return {
+        [obj.key]: val
       }
     }
   },
@@ -66,11 +80,32 @@ export default {
       let res = await http.$axios({
         url: '/api/goods/shopList',
         params: {
-          searchName: this.$route.query.key
+          searchName: this.$route.query.key,
+          ...this.orderBy // 如："price": asc
         }
       })
       this.goodsList = res
-      console.log(res)
+      // console.log(res)
+    },
+    chengeTab(index) {
+      this.searchList.currentIndex = index
+      // 点击的下标对应数据的哪一个
+      let item = this.searchList.data[index]
+      // 取消所有状态的状态值
+      this.searchList.data.forEach((v, i) => {
+        if (i !== index) {
+          v.status = 0
+          // console.log(i)
+          // console.log(index)
+          // console.log(item.status)
+        }
+      })
+      // 当前点击的改变状态
+      if (index === this.searchList.currentIndex) {
+        item.status = item.status == 1 ? 2 : 1
+      }
+      // 发送请求进行数据排序
+      this.getData()
     }
   },
   watch: {
@@ -162,5 +197,11 @@ section ul li .price div:last-child {
 
 .active {
   color: red;
+}
+
+.like img[lazy='loading'] {
+  width: 40px;
+  height: 300px;
+  margin: auto;
 }
 </style>

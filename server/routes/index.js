@@ -10,9 +10,11 @@ router.get('/', function (req, res, next) {
 // 查询商品数据接口
 router.get('/api/goods/shopList', function (req, res, next) {
   // 前端给后端的数据
-  let searchName = req.query.searchName
+  let [searchName, orderName] = Object.keys(req.query)
+  let [name, order] = Object.values(req.query)
+  console.log(searchName, orderName, name, order)
 
-  connection.query(`select * from goods_list where name like "%${searchName}%"`, function (error, results) {
+  connection.query(`select * from goods_list where name like "%${name}%" order by ${orderName} ${order}`, function (error, results) {
     res.send({
       code: 0,
       data: results
@@ -138,6 +140,48 @@ router.get('/api/index_list/1/data/1', function (req, res, next) {
             imgUrl: './images/like.jpeg',
             name: '建盏茶具套装 红色芝麻毫 12件套',
             price: 299
+          },
+          {
+            id: 4,
+            imgUrl: './images/like.jpeg',
+            name: '建盏茶具套装 红色芝麻毫 12件套',
+            price: 299
+          },
+          {
+            id: 5,
+            imgUrl: './images/like.jpeg',
+            name: '建盏茶具套装 红色芝麻毫 12件套',
+            price: 299
+          },
+          {
+            id: 6,
+            imgUrl: './images/like.jpeg',
+            name: '建盏茶具套装 红色芝麻毫 12件套',
+            price: 299
+          },
+          {
+            id: 7,
+            imgUrl: './images/like.jpeg',
+            name: '建盏茶具套装 红色芝麻毫 12件套',
+            price: 299
+          },
+          {
+            id: 8,
+            imgUrl: './images/like.jpeg',
+            name: '建盏茶具套装 红色芝麻毫 12件套',
+            price: 299
+          },
+          {
+            id: 9,
+            imgUrl: './images/like.jpeg',
+            name: '建盏茶具套装 红色芝麻毫 12件套',
+            price: 299
+          },
+          {
+            id: 10,
+            imgUrl: './images/like.jpeg',
+            name: '建盏茶具套装 红色芝麻毫 12件套',
+            price: 299
           }
         ]
       }
@@ -241,6 +285,120 @@ router.get('/api/index_list/0/data/1', function (req, res, next) {
             },
             {
               id: 3,
+              imgUrl: './images/like3.jpeg',
+              name: '建盏茶具套装 红色芝麻毫 12件套',
+              price: 299
+            },
+            {
+              id: 4,
+              imgUrl: './images/like3.jpeg',
+              name: '建盏茶具套装 红色芝麻毫 12件套',
+              price: 299
+            },
+            {
+              id: 5,
+              imgUrl: './images/like3.jpeg',
+              name: '建盏茶具套装 红色芝麻毫 12件套',
+              price: 299
+            },
+            {
+              id: 6,
+              imgUrl: './images/like3.jpeg',
+              name: '建盏茶具套装 红色芝麻毫 12件套',
+              price: 299
+            },
+            {
+              id: 7,
+              imgUrl: './images/like3.jpeg',
+              name: '建盏茶具套装 红色芝麻毫 12件套',
+              price: 299
+            },
+            {
+              id: 8,
+              imgUrl: './images/like3.jpeg',
+              name: '建盏茶具套装 红色芝麻毫 12件套',
+              price: 299
+            },
+            {
+              id: 9,
+              imgUrl: './images/like3.jpeg',
+              name: '建盏茶具套装 红色芝麻毫 12件套',
+              price: 299
+            },
+            {
+              id: 10,
+              imgUrl: './images/like3.jpeg',
+              name: '建盏茶具套装 红色芝麻毫 12件套',
+              price: 299
+            },
+            {
+              id: 11,
+              imgUrl: './images/like3.jpeg',
+              name: '建盏茶具套装 红色芝麻毫 12件套',
+              price: 299
+            },
+            {
+              id: 12,
+              imgUrl: './images/like3.jpeg',
+              name: '建盏茶具套装 红色芝麻毫 12件套',
+              price: 299
+            },
+            {
+              id: 13,
+              imgUrl: './images/like3.jpeg',
+              name: '建盏茶具套装 红色芝麻毫 12件套',
+              price: 299
+            },
+            {
+              id: 14,
+              imgUrl: './images/like3.jpeg',
+              name: '建盏茶具套装 红色芝麻毫 12件套',
+              price: 299
+            },
+            {
+              id: 15,
+              imgUrl: './images/like3.jpeg',
+              name: '建盏茶具套装 红色芝麻毫 12件套',
+              price: 299
+            },
+            {
+              id: 16,
+              imgUrl: './images/like3.jpeg',
+              name: '建盏茶具套装 红色芝麻毫 12件套',
+              price: 299
+            },
+            {
+              id: 17,
+              imgUrl: './images/like3.jpeg',
+              name: '建盏茶具套装 红色芝麻毫 12件套',
+              price: 299
+            },
+            {
+              id: 18,
+              imgUrl: './images/like3.jpeg',
+              name: '建盏茶具套装 红色芝麻毫 12件套',
+              price: 299
+            },
+            {
+              id: 19,
+              imgUrl: './images/like3.jpeg',
+              name: '建盏茶具套装 红色芝麻毫 12件套',
+              price: 299
+            },
+            {
+              id: 20,
+              imgUrl: './images/like3.jpeg',
+              name: '建盏茶具套装 红色芝麻毫 12件套',
+              price: 299
+            },
+            {
+              id: 21,
+              imgUrl: './images/like3.jpeg',
+              name: '建盏茶具套装 红色芝麻毫 12件套',
+              price: 299
+            },
+            {
+              id: 22,
               imgUrl: './images/like3.jpeg',
               name: '建盏茶具套装 红色芝麻毫 12件套',
               price: 299
