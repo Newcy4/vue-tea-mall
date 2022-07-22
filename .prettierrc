@@ -1,0 +1,8 @@
+{
+  "semi": false,
+  "singleQuote": true,
+  "space-before-function-paren":0,
+  "endOfLine": "auto",
+  "trailingComma": "none"
+
+}
