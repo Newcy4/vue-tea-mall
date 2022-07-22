@@ -17,17 +17,17 @@ const routes = [
   {
     path: '/list',
     name: 'List',
-    component: () => import('../views/List.vue')
+    component: () => import('../views/List')
   },
   {
     path: '/cart',
     name: 'Cart',
-    component: () => import('../views/Cart.vue')
+    component: () => import('../views/Cart')
   },
   {
     path: '/my',
     name: 'My',
-    component: () => import('../views/My.vue')
+    component: () => import('../views/My')
   },
   {
     path: '/search',
