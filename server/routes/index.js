@@ -7,6 +7,18 @@ router.get('/', function (req, res, next) {
   res.render('index', { title: 'Express' })
 })
 
+//查询商品id的数据
+router.get('/api/goods/id', function (req, res, next) {
+  let id = req.query.id
+  connection.query(`select * from goods_list where id = ${id} `, function (error, results) {
+    if (error) throw error
+    res.json({
+      code: 0,
+      data: results[0]
+    })
+  })
+})
+
 //分类的接口
 router.get('/api/goods/list', function (req, res, next) {
   res.send({
@@ -442,6 +454,7 @@ router.get('/api/index_list/1/data/1', function (req, res, next) {
     ]
   })
 })
+
 //首页推荐的数据
 router.get('/api/index_list/0/data/1', function (req, res, next) {
   res.send({
@@ -534,14 +547,14 @@ router.get('/api/index_list/0/data/1', function (req, res, next) {
             {
               id: 2,
               imgUrl: './images/like2.jpeg',
-              name: '建盏茶具套装 红色芝麻毫 12件套',
-              price: 299
+              name: '武夷山高级大红袍2号',
+              price: 399
             },
             {
               id: 3,
               imgUrl: './images/like3.jpeg',
-              name: '建盏茶具套装 红色芝麻毫 12件套',
-              price: 299
+              name: '武夷山灰芽花香金骏眉3号',
+              price: 159
             },
             {
               id: 4,

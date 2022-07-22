@@ -50,10 +50,15 @@ export default {
     return {
       value: '0',
       topBar: [],
-      pageData: []
+      pageData: [],
+      oBetterScroll: '',
+      tBetterScroll: ''
     }
   },
   methods: {
+    show(e) {
+      console.log(e.target)
+    },
     changeTab(item) {
       this.addData(item)
     },
@@ -67,9 +72,10 @@ export default {
 
       // 当页面中的DOM都加载完之后再加载better-scroll
       this.$nextTick(() => {
-        new BetterScroll(this.$refs.wrapper, {
+        this.oBetterScroll = new BetterScroll(this.$refs.wrapper, {
           movable: true,
-          zoom: true
+          zoom: true,
+          click: true
         })
       })
     },
@@ -83,6 +89,15 @@ export default {
       } else {
         this.pageData = res
       }
+
+      // 当页面中的DOM都加载完之后再加载better-scroll
+      this.$nextTick(() => {
+        this.tBetterScroll = new BetterScroll(this.$refs.wrapper, {
+          movable: true,
+          zoom: true,
+          click: true
+        })
+      })
     }
   },
   created() {
@@ -92,25 +107,43 @@ export default {
 </script>
 
 <style lang="less" scoped>
+// .home {
+//   display: flex;
+//   flex-direction: column;
+//   width: 100vw;
+//   height: 100vh;
+//   overflow: hidden;
+// }
+// .headers {
+//   width: 100%;
+//   height: 2.24rem;
+// }
+// .headers-main {
+//   position: fixed;
+//   left: 0;
+//   top: 0;
+// }
+// section {
+//   flex: 1;
+//   overflow: hidden;
+// }
+
 .home {
   display: flex;
   flex-direction: column;
+  overflow: hidden;
   width: 100vw;
   height: 100vh;
-  overflow-x: hidden;
 }
 
 section {
   flex: 1;
-  z-index: -1;
-  padding-top: 2.24rem;
-  padding-bottom: 1.6rem;
+  overflow: hidden;
 }
 
 .headers {
-  position: fixed;
-  left: 0;
-  top: 0;
+  height: 2.24rem;
   width: 100%;
+  z-index: 999;
 }
 </style>

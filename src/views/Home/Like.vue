@@ -4,7 +4,7 @@
       <span>猜你喜欢</span>
     </Card>
     <ul>
-      <li v-for="(item, index) in likeList" :key="index">
+      <li v-for="(item, index) in likeList" :key="index" @click="goDetail(item.id)">
         <h2>
           <img v-lazy="item.imgUrl" alt="" />
         </h2>
@@ -20,13 +20,22 @@
 
 <script>
 import Card from './Card.vue'
-// import { Lazyload } from 'mint-ui'
 export default {
   props: {
     likeList: Array
   },
   components: {
     Card
+  },
+  methods: {
+    goDetail(id) {
+      this.$router.push({
+        name: 'Detail',
+        query: {
+          id
+        }
+      })
+    }
   }
 }
 </script>
